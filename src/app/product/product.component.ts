@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from './product.model';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { ADD_PRODUCT } from './product.reducer';
+import { ADD_PRODUCT, DELETE_PRODUCT } from './product.reducer';
+import { UUID } from 'angular2-uuid';
 
 @Component({
   selector: 'app-product',
@@ -14,21 +15,35 @@ export class ProductComponent implements OnInit {
 
   constructor(private store: Store<any>) {
     this.products = this.store.select((state) => state.product);
-    console.log('Products', this.products);
+    this.products.subscribe((response) => {
+      console.log('Products response', response);
+    });
   }
 
   ngOnInit(): void {}
 
-  demo(name:any, price:any){
-    console.log(name, price)
+  demo(name: any, price: any) {
+    console.log(name, price);
   }
 
   addProduct = (name: any, price: any) => {
+    let uuid = UUID.UUID();
     this.store.dispatch({
       type: ADD_PRODUCT,
       payload: <Product>{
+        id: uuid,
         name: name,
-        price: price
+        price: price,
+      },
+    });
+  };
+
+  removeProduct = (id: any) => {
+    console.log("id", id)
+    this.store.dispatch({
+      type: DELETE_PRODUCT,
+      payload: <Product>{
+        id: id,
       },
     });
   };
