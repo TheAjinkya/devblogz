@@ -8,17 +8,20 @@ import { StoreModule } from '@ngrx/store';
 import { counterReducer } from '../state/counter.reducer';
 import { ProductComponent } from './product/product.component';
 import { addProductReducer } from './product/product.reducer';
+import { BlogComponent } from './blog/blog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CounterComponent,
-    ProductComponent
+    ProductComponent,
+    BlogComponent
   ],
   imports: [
     BrowserModule,
     StoreModule.forRoot({ product: addProductReducer }),
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
